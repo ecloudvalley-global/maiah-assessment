@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent 成熟度診斷 | MAIAH · eCloudvalley</title>
+<meta name="description" content="6 題、1 分鐘，即時了解你的企業 AI Agent 部署成熟度，並獲得個人化的 MAIAH 解決方案建議。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════
+     內容區塊開始（工程師整合 CMS 時可從這裡抽取）
+     ═══════════════════════════════════════════ -->
+<style id="maiah-assessment-styles">
+/* ── 品牌變數 ── */
+:root {
+  --dark-blue: #1D50A2;
+  --light-blue: #409AD6;
+  --orange: #F39800;
+  --gray-50: #f8fafc;
+  --gray-100: #eef1f8;
+  --gray-300: #c5cede;
+  --gray-500: #6b7a99;
+  --gray-700: #374060;
+  --gray-900: #111827;
+  --red: #e53e3e;
+  --font-en: 'Montserrat', sans-serif;
+  --font-zh: 'Noto Sans TC', sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-zh);
+  background: #e8ecf4;
+  color: var(--gray-900);
+  min-height: 100vh;
+}
+
+/* ── 頁面容器 ── */
+.page-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px 60px;
+}
+
+/* ── 頂部導航 ── */
+.site-nav {
+  background: #fff;
+  border-bottom: 1px solid var(--gray-100);
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 12px rgba(29,80,162,.06);
+}
+.nav-logo img { height: 30px; width: auto; }
+.nav-back {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-decoration: none;
+  letter-spacing: .5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--dark-blue); }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(160deg, #0d2f6e 0%, #1D50A2 50%, #1a68c4 100%);
+  border-radius: 0 0 24px 24px;
+  padding: 44px 36px 40px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(64,154,214,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(64,154,214,.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(64,154,214,.2) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero-title {
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero-title .accent { color: var(--orange); }
+.hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,.68);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.pill {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+  font-family: var(--font-en);
+  font-weight: 600;
+}
+.pill.orange { background: rgba(243,152,0,.2); border-color: rgba(243,152,0,.4); color: #ffc84d; }
+
+/* ── Progress ── */
+.progress-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 16px rgba(29,80,162,.07);
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.progress-title {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark-blue);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.progress-count {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+}
+.progress-track {
+  height: 6px;
+  background: var(--gray-100);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--dark-blue), var(--light-blue));
+  border-radius: 4px;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+
+/* ── Question Cards ── */
+.question-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 16px rgba(29,80,162,.06);
+  border: 2px solid transparent;
+  transition: border-color .25s, box-shadow .25s;
+}
+.question-card.answered {
+  border-color: var(--light-blue);
+  box-shadow: 0 4px 20px rgba(64,154,214,.15);
+}
+.q-number {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--light-blue);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gray-300);
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--gray-700);
+  background: #fff;
+  transition: all .18s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.opt:hover { border-color: var(--light-blue); background: rgba(64,154,214,.04); }
+.opt.selected {
+  border-color: var(--dark-blue);
+  background: rgba(29,80,162,.06);
+  color: var(--dark-blue);
+  font-weight: 600;
+}
+.opt-indicator {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-300);
+  flex-shrink: 0;
+  transition: all .18s;
+}
+.opt-indicator.checkbox { border-radius: 4px; }
+.opt.selected .opt-indicator {
+  border-color: var(--dark-blue);
+  background: var(--dark-blue);
+  box-shadow: inset 0 0 0 3px white;
+}
+.opt.selected .opt-indicator.checkbox {
+  box-shadow: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ── Submit ── */
+.submit-area {
+  margin-top: 8px;
+}
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(90deg, var(--dark-blue), #1a68c4);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 15px;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  letter-spacing: .5px;
+  box-shadow: 0 6px 24px rgba(29,80,162,.35);
+  transition: opacity .2s, transform .15s;
+}
+.submit-btn:hover:not(:disabled) { opacity: .92; transform: translateY(-1px); }
+.submit-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.submit-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ── Loading ── */
+#loading-state {
+  display: none;
+  background: #fff;
+  border-radius: 16px;
+  padding: 64px 32px;
+  text-align: center;
+  box-shadow: 0 2px 20px rgba(29,80,162,.08);
+  margin-top: 24px;
+}
+.spinner {
+  width: 52px; height: 52px;
+  border: 3px solid var(--gray-100);
+  border-top-color: var(--dark-blue);
+  border-radius: 50%;
+  animation: spin .85s linear infinite;
+  margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-title {
+  font-family: var(--font-en);
+  font-size: 17px; font-weight: 800;
+  color: var(--dark-blue);
+  margin-bottom: 6px;
+}
+.loading-sub { font-size: 13px; color: var(--gray-500); }
+.dots span { animation: blink 1.4s infinite; display: inline-block; }
+.dots span:nth-child(2) { animation-delay: .2s; }
+.dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+
+/* ── Report ── */
+#report-section {
+  display: none;
+  margin-top: 24px;
+}
+.report-hero {
+  background: linear-gradient(135deg, #0d2f6e 0%, #1D50A2 100%);
+  border-radius: 16px;
+  padding: 32px 28px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.report-hero::after {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(64,154,214,.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.report-eyebrow {
+  font-family: var(--font-en);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 8px;
+}
+.report-main-title {
+  font-family: var(--font-en);
+  font-size: 20px; font-weight: 900;
+  color: #fff; margin-bottom: 20px;
+}
+.stage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.25);
+  border-radius: 14px;
+  padding: 14px 22px;
+  margin-bottom: 10px;
+}
+.stage-emoji { font-size: 32px; line-height: 1; }
+.stage-text {
+  font-family: var(--font-en);
+  font-size: 24px; font-weight: 900;
+  color: #fff; letter-spacing: .5px;
+}
+.stage-bench { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.5; margin-top: 8px; }
+
+.rcard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 16px rgba(29,80,162,.07);
+}
+.rcard-label {
+  font-family: var(--font-en);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--light-blue); margin-bottom: 12px;
+}
+.rcard-title {
+  font-size: 15px; font-weight: 700;
+  color: var(--gray-900); margin-bottom: 8px; line-height: 1.4;
+}
+.rcard p { font-size: 13.5px; color: var(--gray-700); line-height: 1.75; }
+
+.gap-item {
+  display: flex; gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.gap-item:last-child { border-bottom: none; padding-bottom: 0; }
+.gap-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--dark-blue);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.gap-body h4 { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 5px; }
+.gap-body p { font-size: 12.5px; color: var(--gray-500); line-height: 1.65; }
+.gap-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 11px; font-weight: 600;
+  color: var(--dark-blue);
+  background: rgba(29,80,162,.08);
+  padding: 3px 12px; border-radius: 12px;
+}
+
+/* ── Final CTA card ── */
+.cta-card {
+  background: linear-gradient(135deg, #fff8ee, #fff3de);
+  border: 2px solid var(--orange);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.cta-icon { font-size: 32px; margin-bottom: 12px; }
+.cta-title {
+  font-family: var(--font-en);
+  font-size: 18px; font-weight: 900;
+  color: var(--gray-900);
+  line-height: 1.3; margin-bottom: 8px;
+}
+.cta-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; margin-bottom: 22px; }
+.cta-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--orange), #e88500);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 15px; font-weight: 800;
+  padding: 16px 40px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(243,152,0,.35);
+  transition: transform .15s, opacity .2s;
+}
+.cta-btn:hover { transform: translateY(-2px); opacity: .92; }
+.cta-hint {
+  margin-top: 16px; padding: 14px 18px;
+  background: rgba(29,80,162,.07);
+  border-left: 3px solid var(--dark-blue);
+  border-radius: 0 8px 8px 0;
+  font-size: 12.5px; color: var(--gray-700);
+  line-height: 1.65; text-align: left;
+}
+.cta-hint strong { color: var(--dark-blue); }
+
+/* ── Restart ── */
+.restart-btn {
+  display: block; width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 10px;
+  color: var(--gray-500);
+  font-family: var(--font-en);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 8px;
+}
+.restart-btn:hover { border-color: var(--dark-blue); color: var(--dark-blue); }
+
+/* ── Footer ── */
+.page-footer {
+  text-align: center;
+  padding: 32px 0 0;
+}
+.footer-logo svg { height: 26px; opacity: .5; margin-bottom: 10px; }
+.footer-copy { font-size: 11px; color: var(--gray-300); line-height: 1.6; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hero { padding: 32px 20px 28px; border-radius: 0 0 16px 16px; }
+  .hero-title { font-size: 22px; }
+  .question-card { padding: 18px; }
+  .report-hero { padding: 24px 20px; }
+  .stage-text { font-size: 20px; }
+  .cta-card { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── 頂部導航 ── -->
+<nav class="site-nav">
+  <a class="nav-logo" href="https://www.ecloudvalley.com/en/"><img src="ECV-Logo-RGB-Transparent%20bg_White.png" alt="eCloudvalley" style="height:30px;width:auto;"></a>
+  <a class="nav-back" href="https://www.ecloudvalley.com/en/">
+    ← 回官網
+  </a>
+</nav>
+
+<!-- ════════════════════════════════════
+     主內容區塊（id="maiah-assessment-root"）
+     CMS 整合：將此 div 整體放入 CMS 頁面 content area
+     ════════════════════════════════════ -->
+<div id="maiah-assessment-root">
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">MAIAH · eCloudvalley</div>
+    <div class="hero-title">AI Agent 部署<br><span class="accent">成熟度診斷</span></div>
+    <div class="hero-sub">回答以下 6 題，即時了解你的企業 AI Agent 部署現況，並獲得對應的 MAIAH 解決方案建議。</div>
+    <div class="hero-pills">
+      <span class="pill">📋 6 道題目</span>
+      <span class="pill">⏱ 約 1 分鐘</span>
+      <span class="pill orange">✨ 即時報告</span>
+    </div>
+  </div>
+
+  <!-- 題目區 -->
+  <div id="quiz-section">
+    <!-- Progress -->
+    <div class="progress-card">
+      <div class="progress-header">
+        <span class="progress-title">診斷進度</span>
+        <span class="progress-count" id="progressCount">0 / 6 已完成</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- Questions 動態產生 -->
+    <div id="questions-container"></div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <button class="submit-btn" id="submitBtn" disabled onclick="submitQuiz()">
+        產生我的診斷報告 →
+      </button>
+      <div class="submit-hint" id="submitHint">請完成所有 6 題以產生診斷報告</div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading-state">
+    <div class="spinner"></div>
+    <div class="loading-title">正在分析你的情況</div>
+    <div class="loading-sub">根據你的回答生成個人化報告<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-section">
+    <div class="report-hero">
+      <div class="report-eyebrow">診斷完成 — 你的個人化分析</div>
+      <div class="report-main-title">AI Agent 部署成熟度報告</div>
+      <div class="stage-badge">
+        <span class="stage-emoji" id="rStageEmoji"></span>
+        <span class="stage-text" id="rStageText"></span>
+      </div>
+      <div class="stage-bench" id="rBench"></div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-label">現況摘要</div>
+      <div class="rcard-title" id="rSummaryTitle"></div>
+      <p id="rSummaryText"></p>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-label">前三優先 Governance Gap</div>
+      <div id="rGaps"></div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-label">下一步建議</div>
+      <p id="rNextStep"></p>
+    </div>
+
+    <div class="cta-card">
+      <div class="cta-icon">🎯</div>
+      <div class="cta-title">根據你的診斷結果<br>我們為你客製化 MAIAH 試用方案</div>
+      <div class="cta-desc">90 天免費試用 · 從你最緊迫的 Gap 開始 · eCloudvalley 顧問全程支援</div>
+      <a href="https://www.ecloudvalley.com/contact-us/" class="cta-btn" target="_blank">菁英計畫 90 天免費試用 →</a>
+      <div class="cta-hint" id="rCtaHint"></div>
+    </div>
+
+    <button class="restart-btn" onclick="restartQuiz()">↺ 重新診斷</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <div class="footer-logo"><img src="ECV-Logo-RGB-Transparent%20bg_White.png" alt="eCloudvalley" style="height:26px;width:auto;opacity:0.5;margin-bottom:10px;"></div>
+    <div class="footer-copy">
+      © 2026 eCloudvalley Digital Technology Co., Ltd. All rights reserved.<br>
+      Empowering Businesses with Cloud
+    </div>
+  </div>
+
+</div><!-- /.page-wrap -->
+</div><!-- /#maiah-assessment-root -->
+
+<!-- ════════════════════════════════════
+     JS 邏輯區塊（id="maiah-assessment-script"）
+     CMS 整合：將此 script 標籤放到頁面底部或獨立 .js 檔案
+     不依賴任何外部 library，純原生 JS
+     ════════════════════════════════════ -->
+<script id="maiah-assessment-script">
+(function() {
+  // ── 題目資料 ──
+  const QUESTIONS = [
+    {
+      id: 'q1', type: 'single',
+      text: '公司目前部署了幾個 AI Agent / LLM 應用？',
+      options: ['尚未部署（0 個）','初期探索（1–3 個）','多個部門試行（4–10 個）','規模化運行（10 個以上）']
+    },
+    {
+      id: 'q3', type: 'multi',
+      text: '目前導入 AI 最大的擔憂是？（可多選）',
+      options: ['資安與資料外洩','合規與 Audit Trail','準確性與幻覺問題','成本控制','AI 工具孤島，無法整合','缺乏技術能力']
+    },
+    {
+      id: 'q4', type: 'single',
+      text: '是否已建立 AI 治理框架（使用規範、權限管理、稽核機制）？',
+      options: ['完全沒有','正在評估中','部分導入，但不完整','已全面導入並定期稽核']
+    },
+    {
+      id: 'q5', type: 'single',
+      text: 'AI Agent 能否跨系統自動執行任務（如 CRM → ERP → 自動發信）？',
+      options: ['目前只能在單一系統內操作','需要大量人工介入才能跨系統','部分自動化，但有明顯斷點','可以全自動跨系統執行任務']
+    },
+    {
+      id: 'q6', type: 'single',
+      text: '員工是否在使用未經 IT 核准的 AI 工具（影子 AI）？',
+      options: ['幾乎確定有，但無法掌握','知道有，正在設法管控','有管控機制，但不完整','有完整清單與使用規範']
+    },
+    {
+      id: 'q10', type: 'single',
+      text: '你最希望透過 AI 優先解決哪個業務問題？',
+      options: ['縮短客服回應時間','加速內部審核 / 流程自動化','提升銷售效率與個人化','強化合規與風險管控']
+    }
+  ];
+
+  const answers = {};
+
+  // ── 初始化題目 ──
+  function init() {
+    const container = document.getElementById('questions-container');
+    QUESTIONS.forEach((q, idx) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = 'card-' + q.id;
+      card.innerHTML = `
+        <div class="q-number">Q ${String(idx+1).padStart(2,'0')}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options-list" id="opts-${q.id}"></div>
+      `;
+      const optsList = card.querySelector('.options-list');
+      q.options.forEach(opt => {
+        const btn = document.createElement('div');
+        btn.className = 'opt';
+        btn.innerHTML = `<div class="opt-indicator${q.type==='multi'?' checkbox':''}"></div><span>${opt}</span>`;
+        btn.addEventListener('click', () => selectOpt(q.id, opt, q.type, btn, optsList));
+        optsList.appendChild(btn);
+      });
+      container.appendChild(card);
+    });
+  }
+
+  function selectOpt(qid, val, type, btn, list) {
+    if (type === 'single') {
+      list.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[qid] = val;
+    } else {
+      btn.classList.toggle('selected');
+      const sel = [...list.querySelectorAll('.opt.selected')].map(b => b.querySelector('span').textContent);
+      if (sel.length) answers[qid] = sel; else delete answers[qid];
+    }
+    const card = document.getElementById('card-' + qid);
+    card.classList.toggle('answered', !!answers[qid]);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = Object.keys(answers).length, total = QUESTIONS.length;
+    document.getElementById('progressFill').style.width = (done / total * 100) + '%';
+    document.getElementById('progressCount').textContent = done + ' / ' + total + ' 已完成';
+    const allDone = done === total;
+    document.getElementById('submitBtn').disabled = !allDone;
+    document.getElementById('submitHint').textContent = allDone
+      ? '✅ 所有題目已完成，點擊上方按鈕產生報告'
+      : '請完成所有 ' + total + ' 題（已完成 ' + done + ' 題）';
+  }
+
+  // ── 提交 ──
+  window.submitQuiz = function() {
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('loading-state').style.display = 'block';
+    document.getElementById('loading-state').scrollIntoView({behavior:'smooth'});
+    setTimeout(() => { renderReport(buildReport()); }, 1400);
+  };
+
+  // ── 重新診斷 ──
+  window.restartQuiz = function() {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    document.getElementById('report-section').style.display = 'none';
+    document.querySelectorAll('.question-card').forEach(c => c.classList.remove('answered'));
+    document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    document.getElementById('quiz-section').style.display = 'block';
+    updateProgress();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+
+  // ── 判斷邏輯 ──
+  function getStage() {
+    const q1 = answers.q1 || '', q4 = answers.q4 || '';
+    if (q1 === '規模化運行（10 個以上）' && ['部分導入，但不完整','已全面導入並定期稽核'].includes(q4)) return '領先期';
+    if (q1 === '多個部門試行（4–10 個）' || ['部分導入，但不完整','已全面導入並定期稽核'].includes(q4)) return '成長期';
+    if (q1 === '初期探索（1–3 個）') return '建置期';
+    return '初探期';
+  }
+
+  function buildReport() {
+    const stage = getStage(), focus = answers.q10 || '加速內部審核 / 流程自動化';
+    const stageMap = {
+      '初探期': {
+        emoji: '🌱',
+        summaryTitle: 'AI 基礎尚未就緒，現在確立方向能避免後期重工',
+        summaryText: `你的組織目前處於 AI 導入起步階段。${focus}是業務上迫切的需求，但缺乏統一的執行框架，容易讓各部門各自摸索、形成 AI 孤島。現在選對平台，能讓你少走 12–18 個月的彎路。`,
+        nextStep: '建議從一個具體的業務場景切入，以 MAIAH Platform 作為統一入口建立第一個 AI Agent 工作流程，同時搭配 MAIAH Governance 從第一天起建立可稽核的使用規範。菁英計畫 90 天試用期間，eCloudvalley 顧問團隊全程陪跑，從場景定義到上線驗證一站完成。'
+      },
+      '建置期': {
+        emoji: '🔧',
+        summaryTitle: '已開始行動，但治理缺口正在悄悄積累風險',
+        summaryText: `你的組織已有初步的 AI 部署經驗，但影子 AI 和缺乏 Audit Trail 是當前最大隱患。隨著使用規模擴大，這個缺口的影響會成倍放大——一旦發生資料外洩或合規問題，現有的工具架構無法提供追溯依據。`,
+        nextStep: '優先補強治理框架是現階段 ROI 最高的動作。MAIAH Governance 的 Guardrails 可防止敏感資料進入 LLM，Audit Logs 讓每一筆 AI 執行都留有完整記錄，RBAC 確保不同角色只看得到該看的資料。90 天試用可以同時跑 MAIAH Platform 的自動化場景與治理部署兩條線。'
+      },
+      '成長期': {
+        emoji: '🚀',
+        summaryTitle: '基礎紮實，現在是把成功經驗複製到全公司的時機',
+        summaryText: `你的組織在 AI 部署上已有相當積累，${focus}的自動化程度達到業界中上水準。目前的核心挑戰是：如何把單一部門的成功快速複製到全公司，同時保持治理品質不因規模化而失控。`,
+        nextStep: 'MAIAH Platform 的統一 Agent 管理入口，讓員工不需要切換多個工具就能使用所有 AI Agent，降低學習成本的同時提升使用率。MAIAH Governance 的 FinOps 模組可以即時追蹤各部門的 AI 用量與成本，讓規模化有財務依據。'
+      },
+      '領先期': {
+        emoji: '🏆',
+        summaryTitle: '你已是業界領先者，下一步是把 AI 能力變成護城河',
+        summaryText: `你的組織在 AI Agent 部署與治理上已達到業界前段班水準。${focus}的 AI 化程度令人印象深刻。當前的策略重點應從「建置與驗證」轉向「規模化與差異化」——如何讓 AI 能力成為競爭對手難以複製的核心資產。`,
+        nextStep: 'MAIAH Platform 支援 BYOA（Bring Your Own Agent），讓你的技術團隊可以把自行開發的 Agent 納入統一平台管理。MAIAH Governance 的完整治理套件（Guardrails + Audit Logs + RBAC + FinOps）能支撐跨市場、跨法規的大規模合規需求。'
+      }
+    };
+    const s = stageMap[stage];
+    const gaps = [];
+    if (['幾乎確定有，但無法掌握','知道有，正在設法管控'].includes(answers.q6))
+      gaps.push({ title:'影子 AI 完全不可視', desc:'未經核准的 AI 工具在各部門流通，企業機密資料的流向無從追蹤。一旦發生資安事件或合規稽查，無法提供任何使用記錄作為依據。', tag:'MAIAH Governance → Overview 儀表板 + RBAC 角色權限管控' });
+    else
+      gaps.push({ title:'AI 使用行為缺乏完整稽核記錄', desc:'雖然已有部分管控機制，但 AI 執行的每一筆輸入與輸出尚未完整留存，無法滿足 ISO 42001 或金融業 AI 指引的稽核要求。', tag:'MAIAH Governance → Audit Logs 完整執行紀錄' });
+    if (['完全沒有','正在評估中'].includes(answers.q4))
+      gaps.push({ title:'沒有護欄：AI 輸入輸出完全暴露', desc:'員工可以把任何內容送進 LLM，包括客戶個資、財務數字、內部機密文件。沒有輸入護欄就等於沒有第一道防線，資料外洩風險實時存在。', tag:'MAIAH Governance → Guardrails（Pre-LLM + Post-LLM 雙層防護）' });
+    else
+      gaps.push({ title:'AI 成本不透明，預算失控風險升高', desc:'隨著 AI 使用擴大，各部門的 Token 消耗和費用難以追蹤，無法做到部門級的成本分攤，也無法在超支前提前預警。', tag:'MAIAH Governance → FinOps 用量與成本追蹤' });
+    if (['目前只能在單一系統內操作','需要大量人工介入才能跨系統'].includes(answers.q5))
+      gaps.push({ title:'AI 只能做單點對話，無法真正執行任務', desc:'AI 在系統邊界處需要人工接手，自動化效益大打折扣。真正的 AI Agent 應該能串接 ERP、CRM、HRM 等企業系統，端到端完成任務流程。', tag:'MAIAH Platform → MCP/Tools 擴張 + 跨企業系統整合' });
+    else
+      gaps.push({ title:'多個 AI 工具各自為政，缺乏統一管理入口', desc:'員工需要在不同工具間切換，造成使用混亂與學習成本浪費。缺乏統一介面也讓 IT 無法集中管控 Agent 的啟用、調整與退場。', tag:'MAIAH Platform → 統一 Agent 管理入口 + 跨 Agent 市集' });
+    return { stage, ...s, gaps };
+  }
+
+  function renderReport(r) {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('rStageEmoji').textContent = r.emoji;
+    document.getElementById('rStageText').textContent = r.stage;
+    document.getElementById('rBench').textContent = '基於你的 AI 部署規模與治理現況綜合判斷';
+    document.getElementById('rSummaryTitle').textContent = r.summaryTitle;
+    document.getElementById('rSummaryText').textContent = r.summaryText;
+    document.getElementById('rNextStep').textContent = r.nextStep;
+    const gc = document.getElementById('rGaps'); gc.innerHTML = '';
+    r.gaps.forEach((g, i) => {
+      gc.innerHTML += `<div class="gap-item"><div class="gap-num">${i+1}</div><div class="gap-body"><h4>${g.title}</h4><p>${g.desc}</p><span class="gap-tag">→ ${g.tag}</span></div></div>`;
+    });
+    document.getElementById('rCtaHint').innerHTML = `💡 <strong>填寫預約表單時，請在「備註」欄填入你的診斷階段：${r.stage}</strong>，我們的顧問會根據你的現況準備對應的試用建議。`;
+    const rs = document.getElementById('report-section');
+    rs.style.display = 'block';
+    rs.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // 啟動
+  init();
+})();
+</script>
+
+</body>
+</html>
