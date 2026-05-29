@@ -220,7 +220,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     else
       gaps.push({title:'AI costs opaque — budget overrun risk rising',desc:'As AI usage expands, department-level token consumption and costs are difficult to track, with no mechanism for departmental cost allocation or early overspend alerts.',tag:'MAIAH Governance → FinOps Usage and Cost Tracking'});
     if (['Only within a single system','Requires heavy manual intervention to cross systems'].includes(answers.q5))
-      gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI Agents that cannot cross system boundaries require manual handoff at each step. MAIAH Platform's MCP integration enables Agents to connect with enterprise systems such as ERP, CRM, and HRM to execute tasks more completely.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
+      gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI Agents that cannot cross system boundaries require manual handoff at each step. MAIAH Platform\'s MCP integration enables Agents to connect with enterprise systems such as ERP, CRM, and HRM to execute tasks more completely.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
     else
       gaps.push({title:'Multiple AI tools siloed — no unified management layer',desc:'When AI tools are spread across different interfaces, employees face a fragmented experience and IT lacks centralised control over Agent activation and management. A unified Agent portal helps address this.',tag:'MAIAH Platform → Unified Agent Management Portal + Agent Marketplace'});
     return { stage, ...s, gaps };
