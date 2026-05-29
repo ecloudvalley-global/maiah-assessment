@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Maturity Assessment | MAIAH · eCloudvalley</title>
+<meta name="description" content="Answer 6 questions in 1 minute to instantly understand your enterprise AI Agent deployment maturity — and receive personalised MAIAH solution recommendations.">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark-blue:#1D50A2; --light-blue:#409AD6; --orange:#F39800;
+  --gray-50:#f8fafc; --gray-100:#eef1f8; --gray-300:#c5cede;
+  --gray-500:#6b7a99; --gray-700:#374060; --gray-900:#111827;
+  --font:'Montserrat','Noto Sans TC',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height:100vh;}
+.page-wrap{max-width:720px;margin:0 auto;padding:0 16px 60px;}
+.site-nav{background:#fff;border-bottom:1px solid var(--gray-100);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 12px rgba(29,80,162,.06);}
+.nav-logo img{height:40px;width:auto;}
+.nav-back{font-size:12px;font-weight:600;color:var(--gray-500);text-decoration:none;letter-spacing:.5px;display:flex;align-items:center;gap:6px;transition:color .2s;}
+.nav-back:hover{color:var(--dark-blue);}
+.hero{background:linear-gradient(160deg,#0d2f6e 0%,#1D50A2 50%,#1a68c4 100%);border-radius:0 0 24px 24px;padding:44px 36px 40px;position:relative;overflow:hidden;margin-bottom:32px;}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(64,154,214,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(64,154,214,.07) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(64,154,214,.2) 0%,transparent 65%);pointer-events:none;}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:12px;position:relative;}
+.hero-title{font-size:28px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px;position:relative;}
+.hero-title .accent{color:var(--orange);}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.68);line-height:1.75;max-width:480px;margin-bottom:24px;position:relative;}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;position:relative;}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.8);font-weight:600;}
+.pill.orange{background:rgba(243,152,0,.2);border-color:rgba(243,152,0,.4);color:#ffc84d;}
+.progress-card{background:#fff;border-radius:14px;padding:20px 24px;margin-bottom:24px;box-shadow:0 2px 16px rgba(29,80,162,.07);}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-title{font-size:12px;font-weight:700;color:var(--dark-blue);letter-spacing:1px;text-transform:uppercase;}
+.progress-count{font-size:12px;font-weight:700;color:var(--gray-500);}
+.progress-track{height:6px;background:var(--gray-100);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--dark-blue),var(--light-blue));border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%;}
+.question-card{background:#fff;border-radius:14px;padding:24px;margin-bottom:14px;box-shadow:0 2px 16px rgba(29,80,162,.06);border:2px solid transparent;transition:border-color .25s,box-shadow .25s;}
+.question-card.answered{border-color:var(--light-blue);box-shadow:0 4px 20px rgba(64,154,214,.15);}
+.q-number{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--light-blue);text-transform:uppercase;margin-bottom:6px;}
+.q-text{font-size:15px;font-weight:600;color:var(--gray-900);line-height:1.5;margin-bottom:16px;}
+.options-list{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:8px;border:1.5px solid var(--gray-300);cursor:pointer;font-size:13.5px;color:var(--gray-700);background:#fff;transition:all .18s;user-select:none;}
+.opt:hover{border-color:var(--light-blue);background:rgba(64,154,214,.04);}
+.opt.selected{border-color:var(--dark-blue);background:rgba(29,80,162,.06);color:var(--dark-blue);font-weight:600;}
+.opt-indicator{width:16px;height:16px;border-radius:50%;border:2px solid var(--gray-300);flex-shrink:0;transition:all .18s;}
+.opt-indicator.checkbox{border-radius:4px;}
+.opt.selected .opt-indicator{border-color:var(--dark-blue);background:var(--dark-blue);box-shadow:inset 0 0 0 3px white;}
+.opt.selected .opt-indicator.checkbox{box-shadow:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;}
+.submit-btn{display:block;width:100%;padding:18px;background:linear-gradient(90deg,var(--dark-blue),#1a68c4);color:#fff;font-size:15px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:.5px;box-shadow:0 6px 24px rgba(29,80,162,.35);transition:opacity .2s,transform .15s;}
+.submit-btn:hover:not(:disabled){opacity:.92;transform:translateY(-1px);}
+.submit-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none;transform:none;}
+.submit-hint{text-align:center;font-size:12px;color:var(--gray-500);margin-top:10px;line-height:1.5;}
+#loading-state{display:none;background:#fff;border-radius:16px;padding:64px 32px;text-align:center;box-shadow:0 2px 20px rgba(29,80,162,.08);margin-top:24px;}
+.spinner{width:52px;height:52px;border:3px solid var(--gray-100);border-top-color:var(--dark-blue);border-radius:50%;animation:spin .85s linear infinite;margin:0 auto 20px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-title{font-size:17px;font-weight:800;color:var(--dark-blue);margin-bottom:6px;}
+.loading-sub{font-size:13px;color:var(--gray-500);}
+.dots span{animation:blink 1.4s infinite;display:inline-block;}
+.dots span:nth-child(2){animation-delay:.2s;}
+.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
+#report-section{display:none;margin-top:24px;}
+.report-hero{background:linear-gradient(135deg,#0d2f6e 0%,#1D50A2 100%);border-radius:16px;padding:32px 28px;margin-bottom:16px;position:relative;overflow:hidden;}
+.report-hero::after{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(64,154,214,.25) 0%,transparent 65%);pointer-events:none;}
+.report-eyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+.report-main-title{font-size:20px;font-weight:900;color:#fff;margin-bottom:20px;}
+.stage-badge{display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:14px;padding:14px 22px;margin-bottom:10px;}
+.stage-emoji{font-size:32px;line-height:1;}
+.stage-text{font-size:24px;font-weight:900;color:#fff;letter-spacing:.5px;}
+.stage-bench{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:8px;}
+.rcard{background:#fff;border-radius:14px;padding:24px;margin-bottom:14px;box-shadow:0 2px 16px rgba(29,80,162,.07);}
+.rcard-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--light-blue);margin-bottom:12px;}
+.rcard-title{font-size:15px;font-weight:700;color:var(--gray-900);margin-bottom:8px;line-height:1.4;}
+.rcard p{font-size:13.5px;color:var(--gray-700);line-height:1.75;}
+.gap-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--gray-100);}
+.gap-item:last-child{border-bottom:none;padding-bottom:0;}
+.gap-num{width:28px;height:28px;border-radius:50%;background:var(--dark-blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.gap-body h4{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:5px;}
+.gap-body p{font-size:12.5px;color:var(--gray-500);line-height:1.65;}
+.gap-tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:var(--dark-blue);background:rgba(29,80,162,.08);padding:3px 12px;border-radius:12px;}
+.cta-card{background:linear-gradient(135deg,#fff8ee,#fff3de);border:2px solid var(--orange);border-radius:16px;padding:32px 28px;text-align:center;margin-bottom:14px;}
+.cta-icon{font-size:32px;margin-bottom:12px;}
+.cta-title{font-size:18px;font-weight:900;color:var(--gray-900);line-height:1.3;margin-bottom:8px;}
+.cta-desc{font-size:13px;color:var(--gray-500);line-height:1.7;margin-bottom:22px;}
+.cta-btn{display:inline-block;background:linear-gradient(90deg,var(--orange),#e88500);color:#fff;font-size:15px;font-weight:800;padding:16px 40px;border-radius:10px;text-decoration:none;box-shadow:0 6px 24px rgba(243,152,0,.35);transition:transform .15s,opacity .2s;}
+.cta-btn:hover{transform:translateY(-2px);opacity:.92;}
+.cta-hint{margin-top:16px;padding:14px 18px;background:rgba(29,80,162,.07);border-left:3px solid var(--dark-blue);border-radius:0 8px 8px 0;font-size:12.5px;color:var(--gray-700);line-height:1.65;text-align:left;}
+.cta-hint strong{color:var(--dark-blue);}
+.restart-btn{display:block;width:100%;padding:14px;background:transparent;border:1.5px solid var(--gray-300);border-radius:10px;color:var(--gray-500);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:8px;}
+.restart-btn:hover{border-color:var(--dark-blue);color:var(--dark-blue);}
+.page-footer{text-align:center;padding:32px 0 0;}
+.footer-logo img{height:36px;opacity:.5;margin-bottom:10px;}
+.footer-copy{font-size:11px;color:var(--gray-300);line-height:1.6;}
+@media(max-width:600px){
+  .hero{padding:32px 20px 28px;border-radius:0 0 16px 16px;}
+  .hero-title{font-size:22px;}
+  .question-card{padding:18px;}
+  .report-hero{padding:24px 20px;}
+  .stage-text{font-size:20px;}
+  .cta-card{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="nav-logo" href="https://www.ecloudvalley.com/en/">
+    <img src="ECV-Logo-RGB-Transparent%20bg_Color.png" alt="eCloudvalley">
+  </a>
+  <a class="nav-back" href="https://www.ecloudvalley.com/en/">← Back to Website</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">MAIAH · eCloudvalley</div>
+    <div class="hero-title">AI Agent Deployment<br><span class="accent">Maturity Assessment</span></div>
+    <div class="hero-sub">Answer 6 quick questions to instantly understand your enterprise AI Agent deployment maturity — and receive personalised MAIAH solution recommendations.</div>
+    <div class="hero-pills">
+      <span class="pill">📋 6 Questions</span>
+      <span class="pill">⏱ ~1 Minute</span>
+      <span class="pill orange">✨ Instant Report</span>
+    </div>
+  </div>
+
+  <div id="quiz-section">
+    <div class="progress-card">
+      <div class="progress-header">
+        <span class="progress-title">Assessment Progress</span>
+        <span class="progress-count" id="progressCount">0 / 6 completed</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div id="questions-container"></div>
+    <div style="margin-top:8px;">
+      <button class="submit-btn" id="submitBtn" disabled onclick="submitQuiz()">Generate My Report →</button>
+      <div class="submit-hint" id="submitHint">Please complete all 6 questions to generate your report</div>
+    </div>
+  </div>
+
+  <div id="loading-state">
+    <div class="spinner"></div>
+    <div class="loading-title">Analysing your situation</div>
+    <div class="loading-sub">Generating your personalised report<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
+
+  <div id="report-section">
+    <div class="report-hero">
+      <div class="report-eyebrow">Assessment Complete — Your Personalised Analysis</div>
+      <div class="report-main-title">AI Agent Maturity Report</div>
+      <div class="stage-badge">
+        <span class="stage-emoji" id="rStageEmoji"></span>
+        <span class="stage-text" id="rStageText"></span>
+      </div>
+      <div class="stage-bench" id="rBench"></div>
+    </div>
+    <div class="rcard"><div class="rcard-label">Current State Summary</div><div class="rcard-title" id="rSummaryTitle"></div><p id="rSummaryText"></p></div>
+    <div class="rcard"><div class="rcard-label">Top 3 Governance Gaps</div><div id="rGaps"></div></div>
+    <div class="rcard"><div class="rcard-label">Recommended Next Steps</div><p id="rNextStep"></p></div>
+    <div class="cta-card">
+      <div class="cta-icon">🎯</div>
+      <div class="cta-title">Based on your diagnostic results,<br>we'll customise your MAIAH trial</div>
+      <div class="cta-desc">90-day free trial · Start from your most urgent gap · Full eCloudvalley advisor support</div>
+      <a href="https://www.ecloudvalley.com/en/p/maiah-elite-program" class="cta-btn" target="_blank">Elite Programme — 90-Day Free Trial →</a>
+      <div class="cta-hint" id="rCtaHint"></div>
+    </div>
+    <button class="restart-btn" onclick="restartQuiz()">↺ Retake Assessment</button>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-logo"><img src="../ECV-Logo-RGB-Transparent%20bg_White.png" alt="eCloudvalley"></div>
+    <div class="footer-copy">© 2026 eCloudvalley Digital Technology Co., Ltd. All rights reserved.<br>Empowering Businesses with Cloud</div>
+  </div>
+</div>
+
+<script>
+
+(function() {
+  const QUESTIONS = [
+    { id:'q1', type:'single', text:'How many AI Agents / LLM applications has your company deployed?',
+      options:['None yet (0)','Early exploration (1–3)','Piloting across departments (4–10)','Running at scale (10+)'] },
+    { id:'q3', type:'multi', text:'What are your biggest concerns about AI adoption? (Select all that apply)',
+      options:['Data security & leakage','Compliance & Audit Trail','Accuracy & hallucination issues','Cost control','Siloed AI tools, unable to integrate','Lack of technical capability'] },
+    { id:'q4', type:'single', text:'Have you established an AI governance framework (usage policies, access control, audit mechanisms)?',
+      options:['Not at all','Currently evaluating','Partially implemented, but incomplete','Fully implemented with regular audits'] },
+    { id:'q5', type:'single', text:'Can your AI Agents execute tasks across systems automatically (e.g. CRM → ERP → auto-email)?',
+      options:['Only within a single system','Requires heavy manual intervention to cross systems','Partially automated, but with clear gaps','Fully automated cross-system execution'] },
+    { id:'q6', type:'single', text:'Are employees using AI tools not approved by IT (Shadow AI)?',
+      options:['Almost certainly, but no visibility','Aware of it, working on controls','Have controls, but incomplete','Full inventory and usage policies in place'] },
+    { id:'q10', type:'single', text:'Which business challenge do you most want AI to solve first?',
+      options:['Reduce customer service response time','Accelerate internal approvals / process automation','Improve sales efficiency and personalisation','Strengthen compliance and risk management'] }
+  ];
+  const answers = {};
+
+  function getStage() {
+    const q1=answers.q1||'', q4=answers.q4||'';
+    if (q1==='Running at scale (10+)' && ['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(q4)) return 'Leader';
+    if (q1==='Piloting across departments (4–10)' || ['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(q4)) return 'Scaling';
+    if (q1==='Early exploration (1–3)') return 'Building';
+    return 'Exploring';
+  }
+
+  function buildReport() {
+    const stage=getStage(), focus=answers.q10||'Accelerate internal approvals / process automation';
+    const stageMap = {
+      'Exploring': { emoji:'🌱', summaryTitle:'Your AI foundation is not yet in place — defining direction now prevents costly rework later', summaryText:`Your organisation is at the early stages of AI adoption. ${focus} is an urgent business need, but without a unified execution framework, teams risk building siloed AI solutions independently. Choosing the right platform now can save you 12–18 months of trial and error.`, nextStep:"We recommend starting with one concrete business use case, using MAIAH Platform as the unified entry point to deploy your first AI Agent workflow, alongside MAIAH Governance to establish auditable usage policies from day one. During the 90-day Elite Programme trial, eCloudvalley's advisory team provides end-to-end support — from use case definition to go-live validation." },
+      'Building': { emoji:'🔧', summaryTitle:"You've started — but governance gaps are quietly accumulating risk", summaryText:`Your organisation has initial AI deployment experience, but Shadow AI and the absence of an Audit Trail are your biggest hidden liabilities. As usage scales, these gaps compound — and when a data breach or compliance issue occurs, your current tooling will leave you without a paper trail.`, nextStep:"Strengthening your governance framework delivers the highest ROI at this stage. MAIAH Governance's Guardrails prevent sensitive data from entering LLMs, Audit Logs ensure every AI action is fully recorded, and RBAC ensures each role only accesses what it should. The 90-day trial lets you run MAIAH Platform automation and governance deployment simultaneously." },
+      'Scaling': { emoji:'🚀', summaryTitle:'Strong foundation — now is the time to replicate success across the organisation', summaryText:`Your organisation has meaningful AI deployment experience, and your automation maturity for ${focus} is above industry average. The core challenge now is: how do you scale individual department wins company-wide, while keeping governance quality intact?`, nextStep:"MAIAH Platform's unified Agent management portal lets employees access all AI Agents from a single interface — reducing learning costs while boosting adoption. MAIAH Governance's FinOps module tracks department-level AI usage and costs in real time." },
+      'Leader': { emoji:'🏆', summaryTitle:"You're ahead of the curve — now turn AI capability into a competitive moat", summaryText:`Your organisation has reached the top tier of AI Agent deployment and governance maturity. Your progress on ${focus} is impressive. The strategic priority should shift from "build and validate" to "scale and differentiate."`, nextStep:"MAIAH Platform supports BYOA (Bring Your Own Agent), letting your engineering team integrate internally developed Agents into the unified management layer. MAIAH Governance's complete suite (Guardrails + Audit Logs + RBAC + FinOps) supports large-scale compliance across multiple markets." }
+    };
+    const s = stageMap[stage];
+    const gaps = [];
+    if (['Almost certainly, but no visibility','Aware of it, working on controls'].includes(answers.q6))
+      gaps.push({title:'Shadow AI completely invisible',desc:'Unapproved AI tools are circulating across departments, with no visibility into where sensitive data is flowing. If a security incident or compliance audit occurs, there is no usage record to fall back on.',tag:'MAIAH Governance → Overview Dashboard + RBAC Access Control'});
+    else
+      gaps.push({title:'No complete audit trail for AI usage',desc:'While some controls exist, every AI input and output is not yet fully retained — falling short of ISO 42001 or financial sector AI guidelines that require complete audit records.',tag:'MAIAH Governance → Audit Logs — Complete Execution Records'});
+    if (['Not at all','Currently evaluating'].includes(answers.q4))
+      gaps.push({title:'No guardrails — AI inputs and outputs fully exposed',desc:'Employees can send anything into an LLM — customer PII, financial figures, confidential documents. Without input guardrails, data leakage risk is live at all times.',tag:'MAIAH Governance → Guardrails (Pre-LLM + Post-LLM dual-layer protection)'});
+    else
+      gaps.push({title:'AI costs opaque — budget overrun risk rising',desc:'As AI usage expands, department-level token consumption and costs are difficult to track, with no mechanism for departmental cost allocation or early overspend alerts.',tag:'MAIAH Governance → FinOps Usage and Cost Tracking'});
+    if (['Only within a single system','Requires heavy manual intervention to cross systems'].includes(answers.q5))
+      gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI hits a wall at system boundaries, requiring manual handoff. True AI Agents should connect ERP, CRM, HRM and complete workflows end-to-end.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
+    else
+      gaps.push({title:'Multiple AI tools siloed — no unified management layer',desc:'Employees switch between different tools, creating confusion and wasted onboarding time. IT cannot centrally control Agent activation, adjustment, and retirement.',tag:'MAIAH Platform → Unified Agent Management Portal + Agent Marketplace'});
+    return { stage, ...s, gaps };
+  }
+
+  function init() {
+    const container = document.getElementById('questions-container');
+    QUESTIONS.forEach((q,idx) => {
+      const card = document.createElement('div'); card.className='question-card'; card.id='card-'+q.id;
+      card.innerHTML = `<div class="q-number">Q ${String(idx+1).padStart(2,'0')}</div><div class="q-text">${q.text}</div><div class="options-list" id="opts-${q.id}"></div>`;
+      const optsList = card.querySelector('.options-list');
+      q.options.forEach(opt => {
+        const btn = document.createElement('div'); btn.className='opt';
+        btn.innerHTML = `<div class="opt-indicator${q.type==='multi'?' checkbox':''}"></div><span>${opt}</span>`;
+        btn.addEventListener('click', () => selectOpt(q.id, opt, q.type, btn, optsList));
+        optsList.appendChild(btn);
+      });
+      container.appendChild(card);
+    });
+  }
+
+  function selectOpt(qid,val,type,btn,list) {
+    if (type==='single') { list.querySelectorAll('.opt').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); answers[qid]=val; }
+    else { btn.classList.toggle('selected'); const sel=[...list.querySelectorAll('.opt.selected')].map(b=>b.querySelector('span').textContent); if(sel.length) answers[qid]=sel; else delete answers[qid]; }
+    document.getElementById('card-'+qid).classList.toggle('answered', !!answers[qid]);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done=Object.keys(answers).length, total=QUESTIONS.length;
+    document.getElementById('progressFill').style.width=(done/total*100)+'%';
+    document.getElementById('progressCount').textContent=done+' / '+total+' completed';
+    const allDone=done===total;
+    document.getElementById('submitBtn').disabled=!allDone;
+    document.getElementById('submitHint').textContent=allDone?'✅ All questions completed — click above to generate your report':'Please complete all '+total+' questions ('+done+' completed)';
+  }
+
+  window.submitQuiz = function() {
+    document.getElementById('quiz-section').style.display='none';
+    document.getElementById('loading-state').style.display='block';
+    document.getElementById('loading-state').scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>{ renderReport(buildReport()); }, 1400);
+  };
+
+  window.restartQuiz = function() {
+    Object.keys(answers).forEach(k=>delete answers[k]);
+    document.getElementById('report-section').style.display='none';
+    document.querySelectorAll('.question-card').forEach(c=>c.classList.remove('answered'));
+    document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+    document.getElementById('quiz-section').style.display='block';
+    updateProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  function renderReport(r) {
+    document.getElementById('loading-state').style.display='none';
+    document.getElementById('rStageEmoji').textContent=r.emoji;
+    document.getElementById('rStageText').textContent=r.stage;
+    document.getElementById('rBench').textContent='Based on your AI deployment scale and governance maturity';
+    document.getElementById('rSummaryTitle').textContent=r.summaryTitle;
+    document.getElementById('rSummaryText').textContent=r.summaryText;
+    document.getElementById('rNextStep').textContent=r.nextStep;
+    const gc=document.getElementById('rGaps'); gc.innerHTML='';
+    r.gaps.forEach((g,i)=>{ gc.innerHTML+=`<div class="gap-item"><div class="gap-num">${i+1}</div><div class="gap-body"><h4>${g.title}</h4><p>${g.desc}</p><span class="gap-tag">→ ${g.tag}</span></div></div>`; });
+    document.getElementById('rCtaHint').innerHTML=`💡 <strong>When filling in the contact form, please include your diagnostic stage: ${r.stage}</strong> in the remarks field. Our advisors will prepare a tailored trial recommendation based on your current situation.`;
+    document.getElementById('report-section').style.display='block';
+    document.getElementById('report-section').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  init();
+})();
+
+</script>
+</body>
+</html>
