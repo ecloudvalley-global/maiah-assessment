@@ -161,8 +161,8 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     <div class="cta-card">
       <div class="cta-icon">🎯</div>
       <div class="cta-title">Based on your diagnostic results,<br>we'll customise your MAIAH trial</div>
-      <div class="cta-desc">90-day free trial · Start from your most urgent gap · Full eCloudvalley advisor support</div>
-      <a href="https://www.ecloudvalley.com/en/p/maiah-elite-program" class="cta-btn" target="_blank">Elite Programme — 90-Day Free Trial →</a>
+      <div class="cta-desc">90-day free trial · eCloudvalley advisor support included</div>
+      <a href="https://www.ecloudvalley.com/en/p/maiah-elite-program" class="cta-btn" target="_blank">Elite Program — 90-Day Free Trial →</a>
       <div class="cta-hint" id="rCtaHint"></div>
     </div>
     <button class="restart-btn" onclick="restartQuiz()">↺ Retake Assessment</button>
@@ -204,25 +204,25 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
   function buildReport() {
     const stage=getStage(), focus=answers.q10||'Accelerate internal approvals / process automation';
     const stageMap = {
-      'Exploring': { emoji:'🌱', summaryTitle:'Your AI foundation is not yet in place — defining direction now prevents costly rework later', summaryText:`Your organisation is at the early stages of AI adoption. ${focus} is an urgent business need, but without a unified execution framework, teams risk building siloed AI solutions independently. Choosing the right platform now can save you 12–18 months of trial and error.`, nextStep:"We recommend starting with one concrete business use case, using MAIAH Platform as the unified entry point to deploy your first AI Agent workflow, alongside MAIAH Governance to establish auditable usage policies from day one. During the 90-day Elite Programme trial, eCloudvalley's advisory team provides end-to-end support — from use case definition to go-live validation." },
-      'Building': { emoji:'🔧', summaryTitle:"You've started — but governance gaps are quietly accumulating risk", summaryText:`Your organisation has initial AI deployment experience, but Shadow AI and the absence of an Audit Trail are your biggest hidden liabilities. As usage scales, these gaps compound — and when a data breach or compliance issue occurs, your current tooling will leave you without a paper trail.`, nextStep:"Strengthening your governance framework delivers the highest ROI at this stage. MAIAH Governance's Guardrails prevent sensitive data from entering LLMs, Audit Logs ensure every AI action is fully recorded, and RBAC ensures each role only accesses what it should. The 90-day trial lets you run MAIAH Platform automation and governance deployment simultaneously." },
-      'Scaling': { emoji:'🚀', summaryTitle:'Strong foundation — now is the time to replicate success across the organisation', summaryText:`Your organisation has meaningful AI deployment experience, and your automation maturity for ${focus} is above industry average. The core challenge now is: how do you scale individual department wins company-wide, while keeping governance quality intact?`, nextStep:"MAIAH Platform's unified Agent management portal lets employees access all AI Agents from a single interface — reducing learning costs while boosting adoption. MAIAH Governance's FinOps module tracks department-level AI usage and costs in real time." },
-      'Leader': { emoji:'🏆', summaryTitle:"You're ahead of the curve — now turn AI capability into a competitive moat", summaryText:`Your organisation has reached the top tier of AI Agent deployment and governance maturity. Your progress on ${focus} is impressive. The strategic priority should shift from "build and validate" to "scale and differentiate."`, nextStep:"MAIAH Platform supports BYOA (Bring Your Own Agent), letting your engineering team integrate internally developed Agents into the unified management layer. MAIAH Governance's complete suite (Guardrails + Audit Logs + RBAC + FinOps) supports large-scale compliance across multiple markets." }
+      'Exploring': { emoji:'🌱', summaryTitle:'Your AI foundation is not yet in place — defining direction now prevents costly rework later', summaryText:`Your organisation is at the early stages of AI adoption. ${focus} is an important business priority, but without a unified framework, teams risk building AI solutions in isolation. Establishing the right platform and governance approach early helps avoid rework and unnecessary costs down the line.`, nextStep:"We recommend starting with one concrete business use case, using MAIAH Platform as the unified entry point to deploy your first AI Agent workflow, alongside MAIAH Governance to establish auditable usage policies from day one. During the 90-day Elite Program trial, eCloudvalley's advisory team provides end-to-end support — from use case definition to go-live validation." },
+      'Building': { emoji:'🔧', summaryTitle:"You've started — but governance gaps are quietly accumulating risk", summaryText:`Your organisation has initial AI deployment experience. Without visibility into Shadow AI usage and without a complete audit trail, governance gaps can accumulate as usage scales. Having clear records of AI actions is increasingly important for internal control and compliance purposes.`, nextStep:"Strengthening your governance framework is a high-priority step at this stage. MAIAH Governance's Guardrails help filter sensitive data before it enters LLMs. Audit Logs record every AI execution for traceability. RBAC ensures each user role accesses only what is appropriate. The 90-day trial allows you to run MAIAH Platform and Governance deployment in parallel." },
+      'Scaling': { emoji:'🚀', summaryTitle:'Strong foundation — now is the time to replicate success across the organisation', summaryText:`Your organisation has meaningful AI deployment experience. As you look to extend AI use across more departments, maintaining consistency in governance and user experience becomes the key challenge. A unified platform and governance layer helps ensure that what works in one team can be replicated reliably across the organisation.`, nextStep:"MAIAH Platform's unified Agent management portal gives employees a consistent interface for accessing all AI Agents, reducing the learning curve and improving adoption. MAIAH Governance's FinOps module provides department-level visibility into AI usage and associated costs." },
+      'Leader': { emoji:'🏆', summaryTitle:"You're ahead of the curve — now turn AI capability into a competitive moat", summaryText:`Your organisation has strong AI Agent deployment and governance foundations. The focus can now shift from initial deployment and validation toward broader scale and continuous improvement — extending AI capability to more workflows while maintaining governance standards.`, nextStep:"MAIAH Platform supports BYOA (Bring Your Own Agent), letting your engineering team integrate internally developed Agents into the unified management layer. MAIAH Governance's complete suite (Guardrails + Audit Logs + RBAC + FinOps) supports large-scale compliance across multiple markets." }
     };
     const s = stageMap[stage];
     const gaps = [];
     if (['Almost certainly, but no visibility','Aware of it, working on controls'].includes(answers.q6))
-      gaps.push({title:'Shadow AI completely invisible',desc:'Unapproved AI tools are circulating across departments, with no visibility into where sensitive data is flowing. If a security incident or compliance audit occurs, there is no usage record to fall back on.',tag:'MAIAH Governance → Overview Dashboard + RBAC Access Control'});
+      gaps.push({title:'Shadow AI completely invisible',desc:'Unapproved AI tools may be in use across departments without IT visibility. Without a centralised view of which tools are being used, it is difficult to track data flows or provide usage records during a compliance review.',tag:'MAIAH Governance → Overview Dashboard + RBAC Access Control'});
     else
       gaps.push({title:'No complete audit trail for AI usage',desc:'While some controls exist, every AI input and output is not yet fully retained — falling short of ISO 42001 or financial sector AI guidelines that require complete audit records.',tag:'MAIAH Governance → Audit Logs — Complete Execution Records'});
     if (['Not at all','Currently evaluating'].includes(answers.q4))
-      gaps.push({title:'No guardrails — AI inputs and outputs fully exposed',desc:'Employees can send anything into an LLM — customer PII, financial figures, confidential documents. Without input guardrails, data leakage risk is live at all times.',tag:'MAIAH Governance → Guardrails (Pre-LLM + Post-LLM dual-layer protection)'});
+      gaps.push({title:'No guardrails — AI inputs and outputs fully exposed',desc:'Without input filtering, employees may send sensitive content — including customer data, financial figures, or confidential documents — into LLMs. Pre-LLM guardrails help prevent this by screening inputs before they reach the model.',tag:'MAIAH Governance → Guardrails (Pre-LLM + Post-LLM dual-layer protection)'});
     else
       gaps.push({title:'AI costs opaque — budget overrun risk rising',desc:'As AI usage expands, department-level token consumption and costs are difficult to track, with no mechanism for departmental cost allocation or early overspend alerts.',tag:'MAIAH Governance → FinOps Usage and Cost Tracking'});
     if (['Only within a single system','Requires heavy manual intervention to cross systems'].includes(answers.q5))
-      gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI hits a wall at system boundaries, requiring manual handoff. True AI Agents should connect ERP, CRM, HRM and complete workflows end-to-end.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
+      gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI Agents that cannot cross system boundaries require manual handoff at each step. MAIAH Platform's MCP integration enables Agents to connect with enterprise systems such as ERP, CRM, and HRM to execute tasks more completely.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
     else
-      gaps.push({title:'Multiple AI tools siloed — no unified management layer',desc:'Employees switch between different tools, creating confusion and wasted onboarding time. IT cannot centrally control Agent activation, adjustment, and retirement.',tag:'MAIAH Platform → Unified Agent Management Portal + Agent Marketplace'});
+      gaps.push({title:'Multiple AI tools siloed — no unified management layer',desc:'When AI tools are spread across different interfaces, employees face a fragmented experience and IT lacks centralised control over Agent activation and management. A unified Agent portal helps address this.',tag:'MAIAH Platform → Unified Agent Management Portal + Agent Marketplace'});
     return { stage, ...s, gaps };
   }
 
@@ -290,7 +290,11 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     document.getElementById('report-section').scrollIntoView({behavior:'smooth',block:'start'});
   }
 
-  init();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 
 </script>
