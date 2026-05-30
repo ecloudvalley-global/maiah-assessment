@@ -170,7 +170,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
       <div class="cta-icon">🎯</div>
       <div class="cta-title">Based on your diagnostic results,<br>we'll customise your MAIAH trial</div>
       <div class="cta-desc">90-day free trial · eCloudvalley advisor support included</div>
-      <a href="https://www.ecloudvalley.com/en/p/maiah-elite-program" class="cta-btn" target="_blank">Elite Program — 90-Day Free Trial →</a>
+      <a href="https://www.ecloudvalley.com/en/p/maiah-elite-program" class="cta-btn" target="_blank" onclick="if(typeof gtag!=='undefined'){gtag('event','maiah_cta_click',{cta_type:'elite_program',location:'report_cta',stage:document.getElementById('rStageText').textContent||''});}">Elite Program — 90-Day Free Trial →</a>
       <div class="cta-hint" id="rCtaHint"></div>
     </div>
     <button class="restart-btn" onclick="restartQuiz()">↺ Retake Assessment</button>
@@ -259,7 +259,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     updateProgress();
     // GA4: track question answered
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'question_answered', {
+      gtag('event', 'maiah_question_answered', {
         question_id: qid,
         answer: Array.isArray(answers[qid]) ? answers[qid].join(', ') : (answers[qid] || ''),
         questions_completed: Object.keys(answers).length
@@ -286,7 +286,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
   window.restartQuiz = function() {
     // GA4: track restart
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'assessment_restart', { previous_stage: document.getElementById('rStageText').textContent || '' });
+      gtag('event', 'maiah_assessment_restart', { previous_stage: document.getElementById('rStageText').textContent || '' });
     }
     Object.keys(answers).forEach(k=>delete answers[k]);
     document.getElementById('report-section').style.display='none';
@@ -312,7 +312,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     document.getElementById('report-section').scrollIntoView({behavior:'smooth',block:'start'});
     // GA4: track assessment complete
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'assessment_complete', {
+      gtag('event', 'maiah_assessment_complete', {
         maturity_stage: r.stage,
         gap_1: r.gaps[0] ? r.gaps[0].title : '',
         gap_2: r.gaps[1] ? r.gaps[1].title : '',
