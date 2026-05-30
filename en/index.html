@@ -126,7 +126,7 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     <div class="hero-title">AI Agent Deployment<br><span class="accent">Maturity Assessment</span></div>
     <div class="hero-sub">Answer 6 quick questions to instantly understand your enterprise AI Agent deployment maturity — and receive personalised MAIAH solution recommendations.</div>
     <div class="hero-pills">
-      <span class="pill">📋 6 Questions</span>
+      <span class="pill">📋 7 Questions</span>
       <span class="pill">⏱ ~1 Minute</span>
       <span class="pill orange">✨ Instant Report</span>
     </div>
@@ -188,31 +188,33 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
   const QUESTIONS = [
     { id:'q1', type:'single', text:'How many AI Agents / LLM applications has your company deployed?',
       options:['None yet (0)','Early exploration (1–3)','Piloting across departments (4–10)','Running at scale (10+)'] },
-    { id:'q3', type:'multi', text:'What are your biggest concerns about AI adoption? (Select all that apply)',
+    { id:'q2', type:'multi', text:'What are your biggest concerns about AI adoption? (Select all that apply)',
       options:['Data security & leakage','Compliance & Audit Trail','Accuracy & hallucination issues','Cost control','Siloed AI tools, unable to integrate','Lack of technical capability'] },
-    { id:'q4', type:'single', text:'Have you established an AI governance framework (usage policies, access control, audit mechanisms)?',
+    { id:'q3', type:'single', text:'Have you established an AI governance framework (usage policies, access control, audit mechanisms)?',
       options:['Not at all','Currently evaluating','Partially implemented, but incomplete','Fully implemented with regular audits'] },
-    { id:'q5', type:'single', text:'Can your AI Agents execute tasks across systems automatically (e.g. CRM → ERP → auto-email)?',
+    { id:'q4', type:'single', text:'Can your AI Agents execute tasks across systems automatically (e.g. CRM → ERP → auto-email)?',
       options:['Only within a single system','Requires heavy manual intervention to cross systems','Partially automated, but with clear gaps','Fully automated cross-system execution'] },
-    { id:'q6', type:'single', text:'Are employees using AI tools not approved by IT (Shadow AI)?',
+    { id:'q5', type:'single', text:'Are employees using AI tools not approved by IT (Shadow AI)?',
       options:['Almost certainly, but no visibility','Aware of it, working on controls','Have controls, but incomplete','Full inventory and usage policies in place'] },
-    { id:'q10', type:'single', text:'Which business challenge do you most want AI to solve first?',
+    { id:'q6', type:'single', text:'Which business challenge do you most want AI to solve first?',
       options:['Reduce customer service response time','Accelerate internal approvals / process automation','Improve sales efficiency and personalisation','Strengthen compliance and risk management'] },
-    { id:'q11', type:'single', text:'How large is your organisation?',
+    { id:'q7', type:'single', text:'How large is your organisation?',
       options:['Less than 100 employees','100–500 employees','501–2,000 employees','More than 2,000 employees'] }
   ];
   const answers = {};
 
   function getStage() {
-    const q1=answers.q1||'', q4=answers.q4||'';
-    if (q1==='Running at scale (10+)' && ['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(q4)) return 'Leader';
-    if (q1==='Piloting across departments (4–10)' || ['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(q4)) return 'Scaling';
+    const q1=answers.q1||'', gov=answers.q3||'';
+    if (q1==='Running at scale (10+)' && ['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(gov)) return 'Leader';
+    if (q1==='Running at scale (10+)') return 'Scaling';
+    if (q1==='Piloting across departments (4–10)') return 'Scaling';
+    if (['Partially implemented, but incomplete','Fully implemented with regular audits'].includes(gov)) return 'Scaling';
     if (q1==='Early exploration (1–3)') return 'Building';
     return 'Exploring';
   }
 
   function buildReport() {
-    const stage=getStage(), focus=answers.q10||'Accelerate internal approvals / process automation';
+    const stage=getStage(), focus=answers.q6||'Accelerate internal approvals / process automation';
     const stageMap = {
       'Exploring': { emoji:'🌱', summaryTitle:'Your AI foundation is not yet in place — defining direction now prevents costly rework later', summaryText:`Your organisation is at the early stages of AI adoption. ${focus} is an important business priority, but without a unified framework, teams risk building AI solutions in isolation. Establishing the right platform and governance approach early helps avoid rework and unnecessary costs down the line.`, nextStep:"We recommend starting with one concrete business use case, using MAIAH Platform as the unified entry point to deploy your first AI Agent workflow, alongside MAIAH Governance to establish auditable usage policies from day one. During the 90-day Elite Program trial, eCloudvalley's advisory team provides end-to-end support — from use case definition to go-live validation." },
       'Building': { emoji:'🔧', summaryTitle:"You've started — but governance gaps are quietly accumulating risk", summaryText:`Your organisation has initial AI deployment experience. Without visibility into Shadow AI usage and without a complete audit trail, governance gaps can accumulate as usage scales. Having clear records of AI actions is increasingly important for internal control and compliance purposes.`, nextStep:"Strengthening your governance framework is a high-priority step at this stage. MAIAH Governance's Guardrails help filter sensitive data before it enters LLMs. Audit Logs record every AI execution for traceability. RBAC ensures each user role accesses only what is appropriate. The 90-day trial allows you to run MAIAH Platform and Governance deployment in parallel." },
@@ -221,15 +223,15 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     };
     const s = stageMap[stage];
     const gaps = [];
-    if (['Almost certainly, but no visibility','Aware of it, working on controls'].includes(answers.q6))
+    if (['Almost certainly, but no visibility','Aware of it, working on controls'].includes(answers.q5))
       gaps.push({title:'Shadow AI completely invisible',desc:'Unapproved AI tools may be in use across departments without IT visibility. Without a centralised view of which tools are being used, it is difficult to track data flows or provide usage records during a compliance review.',tag:'MAIAH Governance → Overview Dashboard + RBAC Access Control'});
     else
       gaps.push({title:'No complete audit trail for AI usage',desc:'While some controls exist, every AI input and output is not yet fully retained — falling short of ISO 42001 or financial sector AI guidelines that require complete audit records.',tag:'MAIAH Governance → Audit Logs — Complete Execution Records'});
-    if (['Not at all','Currently evaluating'].includes(answers.q4))
+    if (['Not at all','Currently evaluating'].includes(answers.q3))
       gaps.push({title:'No guardrails — AI inputs and outputs fully exposed',desc:'Without input filtering, employees may send sensitive content — including customer data, financial figures, or confidential documents — into LLMs. Pre-LLM guardrails help prevent this by screening inputs before they reach the model.',tag:'MAIAH Governance → Guardrails (Pre-LLM + Post-LLM dual-layer protection)'});
     else
       gaps.push({title:'AI costs opaque — budget overrun risk rising',desc:'As AI usage expands, department-level token consumption and costs are difficult to track, with no mechanism for departmental cost allocation or early overspend alerts.',tag:'MAIAH Governance → FinOps Usage and Cost Tracking'});
-    if (['Only within a single system','Requires heavy manual intervention to cross systems'].includes(answers.q5))
+    if (['Only within a single system','Requires heavy manual intervention to cross systems'].includes(answers.q4))
       gaps.push({title:'AI limited to conversation — unable to truly execute tasks',desc:'AI Agents that cannot cross system boundaries require manual handoff at each step. MAIAH Platform\'s MCP integration enables Agents to connect with enterprise systems such as ERP, CRM, and HRM to execute tasks more completely.',tag:'MAIAH Platform → MCP/Tools Expansion + Cross-system Integration'});
     else
       gaps.push({title:'Multiple AI tools siloed — no unified management layer',desc:'When AI tools are spread across different interfaces, employees face a fragmented experience and IT lacks centralised control over Agent activation and management. A unified Agent portal helps address this.',tag:'MAIAH Platform → Unified Agent Management Portal + Agent Marketplace'});
@@ -317,11 +319,11 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
         gap_1: r.gaps[0] ? r.gaps[0].title : '',
         gap_2: r.gaps[1] ? r.gaps[1].title : '',
         gap_3: r.gaps[2] ? r.gaps[2].title : '',
-        business_focus: answers.q10 || '',
+        business_focus: answers.q6 || '',
         deployment_scale: answers.q1 || '',
-        governance_status: answers.q4 || '',
-        shadow_ai: answers.q6 || '',
-        company_size: answers.q11 || 'Not specified'
+        governance_status: answers.q3 || '',
+        shadow_ai: answers.q5 || '',
+        company_size: answers.q7 || 'Not specified'
       });
     }
   }
