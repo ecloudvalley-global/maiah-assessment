@@ -7,6 +7,14 @@
 <title>AI Agent Maturity Assessment | MAIAH · eCloudvalley</title>
 <meta name="description" content="Answer 6 questions in 1 minute to instantly understand your enterprise AI Agent deployment maturity — and receive personalised MAIAH solution recommendations.">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LLK6HB05JL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LLK6HB05JL');
+</script>
 <style>
 :root {
   --dark-blue:#1D50A2; --light-blue:#409AD6; --orange:#F39800;
@@ -189,7 +197,9 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     { id:'q6', type:'single', text:'Are employees using AI tools not approved by IT (Shadow AI)?',
       options:['Almost certainly, but no visibility','Aware of it, working on controls','Have controls, but incomplete','Full inventory and usage policies in place'] },
     { id:'q10', type:'single', text:'Which business challenge do you most want AI to solve first?',
-      options:['Reduce customer service response time','Accelerate internal approvals / process automation','Improve sales efficiency and personalisation','Strengthen compliance and risk management'] }
+      options:['Reduce customer service response time','Accelerate internal approvals / process automation','Improve sales efficiency and personalisation','Strengthen compliance and risk management'] },
+    { id:'q11', type:'single', text:'How large is your organisation?',
+      options:['Less than 100 employees','100–500 employees','501–2,000 employees','More than 2,000 employees'] }
   ];
   const answers = {};
 
@@ -247,6 +257,14 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     else { btn.classList.toggle('selected'); const sel=[...list.querySelectorAll('.opt.selected')].map(b=>b.querySelector('span').textContent); if(sel.length) answers[qid]=sel; else delete answers[qid]; }
     document.getElementById('card-'+qid).classList.toggle('answered', !!answers[qid]);
     updateProgress();
+    // GA4: track question answered
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'question_answered', {
+        question_id: qid,
+        answer: Array.isArray(answers[qid]) ? answers[qid].join(', ') : (answers[qid] || ''),
+        questions_completed: Object.keys(answers).length
+      });
+    }
   }
 
   function updateProgress() {
@@ -266,6 +284,10 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
   };
 
   window.restartQuiz = function() {
+    // GA4: track restart
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'assessment_restart', { previous_stage: document.getElementById('rStageText').textContent || '' });
+    }
     Object.keys(answers).forEach(k=>delete answers[k]);
     document.getElementById('report-section').style.display='none';
     document.querySelectorAll('.question-card').forEach(c=>c.classList.remove('answered'));
@@ -288,6 +310,20 @@ body{font-family:var(--font);background:#e8ecf4;color:var(--gray-900);min-height
     document.getElementById('rCtaHint').innerHTML=`💡 <strong>When filling in the contact form, please include your diagnostic stage: ${r.stage}</strong> in the remarks field. Our advisors will prepare a tailored trial recommendation based on your current situation.`;
     document.getElementById('report-section').style.display='block';
     document.getElementById('report-section').scrollIntoView({behavior:'smooth',block:'start'});
+    // GA4: track assessment complete
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'assessment_complete', {
+        maturity_stage: r.stage,
+        gap_1: r.gaps[0] ? r.gaps[0].title : '',
+        gap_2: r.gaps[1] ? r.gaps[1].title : '',
+        gap_3: r.gaps[2] ? r.gaps[2].title : '',
+        business_focus: answers.q10 || '',
+        deployment_scale: answers.q1 || '',
+        governance_status: answers.q4 || '',
+        shadow_ai: answers.q6 || '',
+        company_size: answers.q11 || 'Not specified'
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
